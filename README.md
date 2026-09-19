@@ -1,0 +1,1 @@
+# scan-no-scam
