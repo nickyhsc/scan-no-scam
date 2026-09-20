@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # SafeCheck — AI Scam Safety Assistant (MVP)
 
 Paste-text MVP: paste a suspicious message → Nemotron analyzes it →
@@ -61,3 +62,6 @@ Same request/response shape, just a different model string.
 
 - `.env.local` is already gitignored — never commit real API keys.
 - No database, no auth — intentionally out of scope for the MVP.
+=======
+# scan-no-scam
+>>>>>>> 471223aab00b986ff220a095a6af1dda9cc72afc

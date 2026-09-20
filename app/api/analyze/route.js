@@ -9,7 +9,7 @@ async function callNemotron(messageText) {
 
   // Primary model id. If your account 404s on this one, swap in
   // "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning" instead - same API shape.
-  const model = "nvidia/nemotron-3-nano-30b-a3b";
+  const model = "nvidia/nemotron-3.5-lightning-30b-a3b";
 
   const res = await fetch("https://integrate.api.nvidia.com/v1/chat/completions", {
     method: "POST",
@@ -24,7 +24,7 @@ async function callNemotron(messageText) {
         { role: "user", content: buildUserPrompt(messageText) },
       ],
       temperature: 0.2,
-      max_tokens: 1024,
+      max_tokens: 3072,
     }),
   });
 
