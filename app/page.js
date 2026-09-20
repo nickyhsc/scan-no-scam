@@ -157,20 +157,53 @@ function Section({ title, subtitle, children }) {
 // Wire this up later - swap the button body for a real API call to
 // ElevenLabs' text-to-speech endpoint using result.summary as the input.
 function ListenButton({ text }) {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  async function handleListen() {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/tts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setError(data.error || "Couldn't generate audio.");
+        return;
+      }
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const audio = new Audio(url);
+      audio.play();
+      audio.onended = () => URL.revokeObjectURL(url);
+    } catch (e) {
+      setError("Network error.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
-    <button
-      onClick={() => alert("TODO: call ElevenLabs with this text:\n\n" + text)}
-      style={{
-        padding: "10px 20px",
-        fontSize: 15,
-        borderRadius: 8,
-        border: "1px solid #2b57d8",
-        background: "white",
-        color: "#2b57d8",
-        cursor: "pointer",
-      }}
-    >
-      🔊 Listen to explanation
-    </button>
+    <div>
+      <button
+        onClick={handleListen}
+        disabled={loading}
+        style={{
+          padding: "10px 20px",
+          fontSize: 15,
+          borderRadius: 8,
+          border: "1px solid #2b57d8",
+          background: "white",
+          color: "#2b57d8",
+          cursor: loading ? "not-allowed" : "pointer",
+        }}
+      >
+        {loading ? "Generating audio..." : "🔊 Listen to explanation"}
+      </button>
+      {error && <p style={{ color: "#c22", fontSize: 13 }}>⚠️ {error}</p>}
+    </div>
   );
 }
