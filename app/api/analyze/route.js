@@ -25,6 +25,7 @@ async function callNemotron(messageText) {
       ],
       temperature: 0.2,
       max_tokens: 3072,
+      chat_template_kwargs: { thinking: false },
     }),
   });
 
