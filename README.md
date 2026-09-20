@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # SafeCheck — AI Scam Safety Assistant (MVP)
 
 Paste-text MVP: paste a suspicious message → Nemotron analyzes it →
