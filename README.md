@@ -3,7 +3,7 @@
 *An efficient scam risk detector/helper for daily text messages and emails.*
 - Analyzed by Nvidia Nemotron-3.5-lightning-30b-a3b
 - Falls back to Claude if Nemotron fails
-- ElevenLabs embedded to provide the function to listen through the analyzed output
+- Integrated ElevenLabs text-to-speech to audibly deliver enerated scam analysis, improving accessibility and reducing the need for users to read lengthy outputs
 
 
 ### Inspiration
