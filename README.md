@@ -1,66 +1,29 @@
-# SafeCheck — AI Scam Safety Assistant (MVP)
+# SafeCheck — AI Scam Safety Assistant
 
-Paste-text MVP: paste a suspicious message → Nemotron analyzes it →
-see WHY / WHAT / NOW WHAT. Falls back to Claude if Nemotron fails.
+*An efficient scam risk detector/helper for daily text messages and emails.*
+- Analyzed by Nvidia Nemotron-3.5-lightning-30b-a3b
+- Falls back to Claude if Nemotron fails
+- ElevenLabs embedded to provide the function to listen through the analyzed output
 
-## Setup
 
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
+### Inspiration
+Being university students, we have had our fair share of scam emails and messages. Oftentimes, there will be messages that pose an unclear risk. We decided to build a tool that will help bridge that uncertainty.
 
-2. Copy the env example and fill in your real keys:
-   ```bash
-   cp .env.local.example .env.local
-   ```
-   Then edit `.env.local`:
-   - `NVIDIA_API_KEY` — get this from https://build.nvidia.com (pick a Nemotron model → "Get API Key")
-   - `ANTHROPIC_API_KEY` — get this from https://console.anthropic.com (only used as a fallback)
+### What it does
+The user can type suspicious text into the text box, and the Nemotron AI will scan, analyze, and detect whether the text is at high, low, or suspicious risk. We included a fallback: when Nemotron fails, Claude AI will analyze the text instead. ElevenLabs text-to-voice is also integrated to assess messages.
 
-3. Run the dev server:
-   ```bash
-   npm run dev
-   ```
+### How we built it
+We first outlined the structure of our project. We then designed the web UI on paper, and since we both have limited experience with web dev, we decided to vibecode the UI with Claude to build its functionality.
 
-4. Open http://localhost:3000, paste a test message, click "Analyze Message".
+### Challenges we ran into
+We had issues connecting the API keys. For one, Nemotron often wouldn't work, so that is why we included a Claude API fallback.
 
-## How it works
+### Accomplishments that we're proud of
+We were proud of learning more about the web development process and being able to connect to different AI models using the API keys.
 
-- `app/page.js` — the paste box + results UI
-- `app/api/analyze/route.js` — receives the pasted text, calls Nemotron
-  (`nvidia/nemotron-3-nano-30b-a3b`), and falls back to Claude
-  (`claude-sonnet-4-6`) only if Nemotron's call fails
-- `lib/prompt.js` — the single shared system prompt + JSON schema both
-  providers are told to follow, so the frontend gets the same shape either way
+### What we learned
+We learned a lot more about JavaScript and connecting our project with different AI models.
 
-## If Nemotron returns a 404
-
-Some accounts don't have hosted access enabled for `nvidia/nemotron-3-nano-30b-a3b`
-yet. If you see that error, open `app/api/analyze/route.js` and swap the
-`model` value to:
-```
-nvidia/nemotron-3-nano-omni-30b-a3b-reasoning
-```
-Same request/response shape, just a different model string.
-
-## Next steps (in priority order)
-
-1. Test the pipeline above against a handful of real/fake sample messages
-   (scam + legit + ambiguous) and tune `lib/prompt.js` until the output
-   is reliably good.
-2. Add evidence highlighting: take `signals[].evidence` and highlight that
-   exact substring inside the pasted message on screen.
-3. Wire up the real "Listen to explanation" button in `app/page.js` to
-   call the ElevenLabs text-to-speech API with `result.summary`.
-4. Only after all of the above works reliably: add screenshot upload,
-   ideally using `nvidia/nemotron-3-nano-omni-30b-a3b-reasoning` directly
-   on the image (skips a separate OCR step).
-
-## Notes
-
-- `.env.local` is already gitignored — never commit real API keys.
-- No database, no auth — intentionally out of scope for the MVP.
-=======
-# scan-no-scam
->>>>>>> 471223aab00b986ff220a095a6af1dda9cc72afc
+### What's next for Scan No Scam
+- Scanning or uploading pictures functions for text and email picture
+- Interactable Frequently-Asked-Questions (FAQ) function with ElevenLabs, providing users to have real-time communication with the scam safety assistant
